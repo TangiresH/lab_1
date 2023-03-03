@@ -14,7 +14,7 @@ const (
 
 type handler struct{}
 
-func (h *handler) ServeHTTP(res http.ResponseWrite, req *http.Request) {
+func (h *handler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	if req.Method != http.MethodGet || req.URL.Path != path {
 		http.Error(res, "Not found", http.StatusNotFound)
 		return
@@ -28,12 +28,16 @@ func (h *handler) ServeHTTP(res http.ResponseWrite, req *http.Request) {
 	if err := json.NewEncoder(res).Encode(response); err != nil {
 		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
 	}
+}
 
-	func main() {
-		server := &http.Server{
-			Addr:    port,
-			Handler: &handler{},
-		}
+func main() {
+	server := &http.Server{
+		Addr:    port,
+		Handler: &handler{},
 	}
 
+	log.Printf("Server running on port %s\n", port)
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatal(err)
+	}
 }
