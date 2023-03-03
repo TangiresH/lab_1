@@ -28,4 +28,12 @@ func (h *handler) ServeHTTP(res http.ResponseWrite, req *http.Request) {
 	if err := json.NewEncoder(res).Encode(response); err != nil {
 		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
 	}
+
+	func main() {
+		server := &http.Server{
+			Addr:    port,
+			Handler: &handler{},
+		}
+	}
+
 }
