@@ -1,5 +1,12 @@
 package lab_1
 
+import (
+	"encoding/json"
+	"log"
+	"net/http"
+	"time"
+)
+
 const (
 	path = "/time"
 	port = ":8795"
@@ -17,4 +24,8 @@ func (h *handler) ServeHTTP(res http.ResponseWrite, req *http.Request) {
 	response := map[string]string{"time": currentTime}
 
 	res.Header().Set("Content-Type", "application/json")
+
+	if err := json.NewEncoder(res).Encode(response); err != nil {
+		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
+	}
 }
