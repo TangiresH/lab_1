@@ -12,4 +12,9 @@ func (h *handler) ServeHTTP(res http.ResponseWrite, req *http.Request) {
 		http.Error(res, "Not found", http.StatusNotFound)
 		return
 	}
+
+	currentTime := time.Now().Format(time.RFC3339)
+	response := map[string]string{"time": currentTime}
+
+	res.Header().Set("Content-Type", "application/json")
 }
