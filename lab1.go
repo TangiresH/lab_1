@@ -1,4 +1,4 @@
-package lab_1
+package main
 
 import (
 	"encoding/json"
@@ -41,4 +41,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
